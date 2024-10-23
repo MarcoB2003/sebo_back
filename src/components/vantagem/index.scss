@@ -1,0 +1,23 @@
+
+
+.comp-vantagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    border-radius: 10px;
+    padding: 30px;
+    background-color:lightgray;
+    width: 400px;
+
+    h1 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    img {
+        height: 150px;
+    }
+}
