@@ -1,13 +1,13 @@
-// Importações
 import bcrypt from 'bcrypt';
-import con from './connection.js';
+import criarConexao from './connection.js';
 
 // Função para criar um usuário administrador
 export async function criarUsuarioAdmin() {
+    const con = await criarConexao(); // Garante a conexão antes de utilizá-la
     const nome = 'Marco';
     const email = 'admin@example.com';
     const senhaOriginal = 'lasanha';
-    const hash = await bcrypt.hash(senhaOriginal, 10); // Criptografar a senha
+    const hash = await bcrypt.hash(senhaOriginal, 10);
 
     let comando = `
         INSERT INTO tb_usuario (nm_usuario, ds_email, ds_senha)
@@ -20,6 +20,7 @@ export async function criarUsuarioAdmin() {
 
 // Função para autenticar o usuário
 export async function autenticarUsuario(email, senha) {
+    const con = await criarConexao(); // Garante a conexão antes de utilizá-la
     let comando = `
         SELECT id_usuario, nm_usuario, ds_senha
         FROM tb_usuario
@@ -40,6 +41,7 @@ export async function autenticarUsuario(email, senha) {
 
 // Função para consultar todos os usuários
 export async function consultarUsuarios() {
+    const con = await criarConexao(); // Garante a conexão antes de utilizá-la
     const comando = `
         SELECT id_usuario, nm_usuario, ds_email
         FROM tb_usuario
