@@ -16,30 +16,44 @@ export async function criarUsuarioAdmin() {
 }
 
 export async function autenticarUsuario(email, senha) {
-    const comando = `
-        SELECT id_usuario, nm_usuario, ds_senha
-        FROM tb_usuario
-        WHERE ds_email = ?
-    `;
+    try {
+        console.log('Tentando autenticar com email:', email);
 
-    const [usuarios] = await con.query(comando, [email]);
-    if (usuarios.length === 0) return null;
+        const comando = `
+            SELECT id_usuario, nm_usuario, ds_senha
+            FROM tb_usuario
+            WHERE ds_email = ?
+        `;
+        const [usuarios] = await con.query(comando, [email]);
 
-    const usuario = usuarios[0];
-    const senhaValida = await bcrypt.compare(senha, usuario.ds_senha);
-    
-    if (!senhaValida) return null;
-    
-    return { id_usuario: usuario.id_usuario, nm_usuario: usuario.nm_usuario };
+        console.log('Usuários encontrados:', usuarios);
+
+        if (usuarios.length === 0) {
+            console.log('Usuário não encontrado');
+            return null;
+        }
+
+        const usuario = usuarios[0];
+        const senhaValida = await bcrypt.compare(senha, usuario.ds_senha);
+
+        if (!senhaValida) {
+            console.log('Senha incorreta');
+            return null;
+        }
+        
+        return { id_usuario: usuario.id_usuario, nm_usuario: usuario.nm_usuario };
+    } catch (err) {
+        console.error('Erro ao autenticar usuário:', err);
+        throw err;
+    }
 }
 
-// Função para consultar todos os usuários
+// Certifique-se de que esta função esteja corretamente exportada
 export async function consultarUsuarios() {
     const comando = `
         SELECT id_usuario, nm_usuario, ds_email
         FROM tb_usuario
     `;
-    
     const [usuarios] = await con.query(comando);
     return usuarios;
 }
