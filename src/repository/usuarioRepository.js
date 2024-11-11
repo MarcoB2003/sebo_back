@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import con from './connection.js';
 
 export async function criarUsuarioAdmin() {
-    const nome = 'admin@example.com';
+    const nome = 'Marco';
     const email = 'admin@example.com';
     const senhaOriginal = 'lasanha';
     const hash = await bcrypt.hash(senhaOriginal, 10);
