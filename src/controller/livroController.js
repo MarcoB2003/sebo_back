@@ -9,20 +9,6 @@ import multer from "multer";
 import { Router } from "express";
 const endpoints = Router();
 
-// Endpoint para autenticação de usuário sem geração de token
-endpoints.post('/login', async (req, resp) => {
-    try {
-        const { email, senha } = req.body;
-        const usuario = await autenticarUsuario(email, senha);
-        if (!usuario) {
-            return resp.status(401).send({ erro: 'Credenciais inválidas' });
-        }
-        resp.send({ id: usuario.id_usuario, nome: usuario.nm_usuario });
-    } catch (err) {
-        console.error(err);
-        resp.status(500).send({ erro: 'Erro interno ao autenticar o usuário' });
-    }
-});
 
 // Endpoint para salvar um livro
 endpoints.post('/livro', async (req, resp) => {
