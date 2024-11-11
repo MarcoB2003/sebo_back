@@ -3,7 +3,7 @@ const endpoints = Router();
 
 import consultarLoginService from "../service/login/consultarLoginService.js";
 
-endpoints.get('/login', async (req, resp) => {
+endpoints.post('/login', async (req, resp) => {
     try {
 
         let loginObj = req.query;
